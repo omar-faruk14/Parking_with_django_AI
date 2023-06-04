@@ -1,4 +1,4 @@
-from django.shortcuts import render
+from django.shortcuts import render,HttpResponse
 from .models import ParkingLot
 from .forms import ParkingLotForm
 
@@ -41,4 +41,10 @@ def update_parking_lot(request, pk):
         form = ParkingLotForm(instance=parking_lot)
 
     return render(request, 'edit_parking_lot.html', {'form': form, 'parking_lot': parking_lot})
+def delete_parking_lot(request, parking_lot_id):
+    parking_lot = ParkingLot.objects.get(id=parking_lot_id)
+    if request.method == 'POST':
+        parking_lot.delete()
+        return redirect('home')  # Redirect to the home page after deletion
+    return HttpResponse("Deletion is not completed")
 
