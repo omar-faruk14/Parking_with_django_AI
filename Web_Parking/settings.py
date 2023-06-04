@@ -12,6 +12,7 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    'web_parking_app1',
 ]
 
 MIDDLEWARE = [
@@ -47,10 +48,18 @@ WSGI_APPLICATION = 'Web_Parking.wsgi.application'
 TEMPLATE_DIR = os.path.join(BASE_DIR,"templates")
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': BASE_DIR / 'db.sqlite3',
+        'ENGINE': 'django.db.backends.mysql',
+        'NAME': 'emi_lab_parking_database',
+        'USER': 'root',
+        'PASSWORD': '',
+        'HOST': '127.0.0.1',  # Usually 'localhost' or '127.0.0.1'
+        'PORT': '3306',  # Usually '3306'
+        'OPTIONS': {
+            'sql_mode': 'STRICT_TRANS_TABLES',
+        },
     }
 }
+
 
 AUTH_PASSWORD_VALIDATORS = [
     {
