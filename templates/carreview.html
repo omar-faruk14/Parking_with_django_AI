@@ -1,151 +1,169 @@
 {% extends "layout.html" %}
-{%block content%}
+{% block content %}
 {% load static %}
 
 <!-- Main content -->
 <section class="content">
     <div class="row">
-      <div class="col-xs-12">
-        <div class="box">
-          <div class="box-header">
-            <h3 class="box-title"><i class="fa fa-cab"></i> Car Review Data Table</h3><button type="button" class="btn btn-success btn-sm" style="margin-left: 2%" data-toggle="modal" data-target="#add">
-             <i class="fa fa-plus"></i> Add
-            </button>
-      <div class="modal fade" id="add">
-        <div class="modal-dialog">
-          <form role="form">
-          <div class="modal-content">
-            <div class="modal-header">
-              <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                <span aria-hidden="true">&times;</span></button>
-              <h4 class="modal-title">Parking Information</h4>
-            </div>
-            <div class="modal-body">
-          <div class="box box-primary">
-          <div class="box-header with-border">
-            <h3 class="box-title">Fill In : </h3>
-          </div>
-            <div class="box-body">
-              <div class="form-group">
-                <label>Select Costumer</label>
-                <select class="form-control">
-                  <option>Chistian Jelobadola</option>
-                  <option>Data</option>
-                </select>
-              </div>
-              <div class="form-group">
-                <label for="exampleInputEmail1">Review</label>
-                <textarea class="form-control" rows="3" placeholder="Enter ..."></textarea>
-              </div>
-              <div class="form-group">
-                <label for="exampleInputEmail1">Score</label>
-                <input type="text" class="form-control"   placeholder="Enter Score">
-              </div>
-            </div>
-        </div>
-            </div>
-            <div class="modal-footer">
-              <button type="button" class="btn btn-danger pull-left" data-dismiss="modal">Close</button>
-              <button type="submit" class="btn btn-primary">Submit</button>
-            </div>
-          </div>
-          </form>
-        </div>
-        <!-- /.modal-dialog -->
-      </div>
-      <!-- /.modal -->
-          </div>
-          <!-- /.box-header -->
-          <div class="box-body">
-            <table id="example1" class="table table-bordered table-striped">
-              <thead>
-              <tr style="background-color: #c5c5c5;">
-                <th style="width: 25%"><i class="fa fa-user"></i> ID</th>
-                <th style="width: 9%"><i class="fa fa-list-ol"></i> Name</th>
-                <th style="width: 15%"><i class="fa fa-calendar"></i> Number of Parking</th>
-                <th style="width: 15%"><i class="fa fa-user"></i> Parking Limit</th>
-                <th style="width: 12%"><i class="fa fa-phone"></i> Parking Ratio</th>
-                <th style="width: 7.8%"> </th>
-              </tr>
-              </thead>
-              <tbody>
-              <tr>
-                {% for parking_lot in parking_lots %}
-                  <td>{{ parking_lot.id }}</td>
-                  <td>{{ parking_lot.name }}</td>
-                  <td>{{ parking_lot.number_of_parking }}</td>
-                  <td>{{ parking_lot.parking_limit }}</td>
-                  
-                  <td align="center"><span class="btn btn-info btn-xs">56%</span></td>
-                  <td align="center"><button type="button" class="btn btn-primary btn-sm" data-toggle="modal" data-target="#edit"><i class="fa fa-pencil"></i></button> <button type="button" class="btn btn-danger btn-sm"><i class="fa fa-trash"></i></button></td>
-                {% endfor %}
+        <div class="col-xs-12">
+            <div class="box">
+                <div class="box-header">
+                    <h3 class="box-title"><i class="fa fa-cab"></i> Car Review Data Table</h3>
+                    <button type="button" class="btn btn-success btn-sm" style="margin-left: 2%" data-toggle="modal"
+                        data-target="#add">
+                        <i class="fa fa-plus"></i> Add
+                    </button>
+                    <div class="modal fade" id="add">
+                        <div class="modal-dialog">
+                            <form role="form" method="post" action="{% url 'add_parking_lot' %}">
+                                {% csrf_token %}
+                                <div class="modal-content">
+                                    <div class="modal-header">
+                                        <button type="button" class="close" data-dismiss="modal"
+                                            aria-label="Close">
+                                            <span aria-hidden="true">&times;</span>
+                                        </button>
+                                        <h4 class="modal-title">Parking Information</h4>
+                                    </div>
+                                    <div class="modal-body">
+                                        <div class="box box-primary">
+                                            <div class="box-header with-border">
+                                                <h3 class="box-title">Fill In :</h3>
+                                            </div>
+                                            <div class="box-body">
+                                                <div class="form-group">
+                                                    <label for="name">Name</label>
+                                                    <input type="text" class="form-control" id="name"
+                                                        name="name" placeholder="Enter Name">
+                                                </div>
+                                                <div class="form-group">
+                                                    <label for="number_of_parking">Number of Parking</label>
+                                                    <input type="number" class="form-control"
+                                                        id="number_of_parking" name="number_of_parking"
+                                                        placeholder="Enter Number of Parking">
+                                                </div>
+                                                <div class="form-group">
+                                                    <label for="parking_limit">Parking Limit</label>
+                                                    <input type="number" class="form-control"
+                                                        id="parking_limit" name="parking_limit"
+                                                        placeholder="Enter Parking Limit">
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="modal-footer">
+                                        <button type="button" class="btn btn-danger pull-left"
+                                            data-dismiss="modal">Close</button>
+                                        <button type="submit" class="btn btn-primary">Submit</button>
+                                    </div>
+                                </div>
+                            </form>
+                        </div>
+                        <!-- /.modal-dialog -->
+                    </div>
+                    <!-- /.modal -->
+                </div>
+                <!-- /.box-header -->
+                <div class="box-body">
+                    <table id="example1" class="table table-bordered table-striped">
+                        <thead>
+                            <tr style="background-color: #c5c5c5;">
+                                <th style="width: 25%"><i class="fa fa-user"></i> ID</th>
+                                <th style="width: 9%"><i class="fa fa-list-ol"></i> Name</th>
+                                <th style="width: 15%"><i class="fa fa-calendar"></i> Number of Parking</th>
+                                <th style="width: 15%"><i class="fa fa-user"></i> Parking Limit</th>
+                                <th style="width: 12%"><i class="fa fa-phone"></i> Parking Ratio</th>
+                                <th style="width: 7.8%"> </th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {% for parking_lot in parking_lots %}
+                            <tr>
+                                <td>{{ parking_lot.id }}</td>
+                                <td>{{ parking_lot.name }}</td>
+                                <td>{{ parking_lot.number_of_parking }}</td>
+                                <td>{{ parking_lot.parking_limit }}</td>
 
-                
-              </tr>
-              
-              </tbody>
-              <tfoot>
-              <tr style="background-color: #c5c5c5;">
-                <th>ID</th>
-                <th>Name</th>
-                <th>Number of Parking</th>
-                <th>Parking Limit</th>
-                <th>parking Ratio</th>
-                <th> </th>
-              </tr>
-              </tfoot>
-            </table>
-      <div class="modal fade" id="edit">
-        <div class="modal-dialog">
-          <form role="form">
-          <div class="modal-content">
-            <div class="modal-header">
-              <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                <span aria-hidden="true">&times;</span></button>
-              <h4 class="modal-title">Update Car Review</h4>
+                                <td align="center"><span class="btn btn-info btn-xs">56%</span></td>
+                                <td align="center">
+                                    <button type="button" class="btn btn-primary btn-sm" data-toggle="modal"
+                                        data-target="#edit{{ parking_lot.id }}"><i class="fa fa-pencil"></i></button>
+                                    <button type="button" class="btn btn-danger btn-sm"><i
+                                            class="fa fa-trash"></i></button>
+                                </td>
+                            </tr>
+                            <!-- Edit Modal -->
+                            <div class="modal fade" id="edit{{ parking_lot.id }}">
+                                <div class="modal-dialog">
+                                    <form role="form" method="post" action="{% url 'update_parking_lot' parking_lot.id %}">
+                                        {% csrf_token %}
+                                        <div class="modal-content">
+                                            <div class="modal-header">
+                                                <button type="button" class="close" data-dismiss="modal"
+                                                    aria-label="Close">
+                                                    <span aria-hidden="true">&times;</span>
+                                                </button>
+                                                <h4 class="modal-title">Update Parking Lot</h4>
+                                            </div>
+                                            <div class="modal-body">
+                                                <div class="box box-warning">
+                                                    <div class="box-header with-border">
+                                                    </div>
+                                                    <div class="box-body">
+                                                        <div class="form-group">
+                                                            <label for="name">Name</label>
+                                                            <input type="text" class="form-control" id="name"
+                                                                name="name" value="{{ parking_lot.name }}">
+                                                        </div>
+                                                        <div class="form-group">
+                                                            <label for="number_of_parking">Number of Parking</label>
+                                                            <input type="number" class="form-control"
+                                                                id="number_of_parking" name="number_of_parking"
+                                                                value="{{ parking_lot.number_of_parking }}">
+                                                        </div>
+                                                        <div class="form-group">
+                                                            <label for="parking_limit">Parking Limit</label>
+                                                            <input type="number" class="form-control"
+                                                                id="parking_limit" name="parking_limit"
+                                                                value="{{ parking_lot.parking_limit }}">
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="modal-footer">
+                                                <button type="button" class="btn btn-danger pull-left"
+                                                    data-dismiss="modal">Close</button>
+                                                <button type="submit" class="btn btn-primary">Update</button>
+                                            </div>
+                                        </div>
+                                    </form>
+                                </div>
+                                <!-- /.modal-dialog -->
+                            </div>
+                            <!-- /.modal -->
+                            {% endfor %}
+                        </tbody>
+                        <tfoot>
+                            <tr style="background-color: #c5c5c5;">
+                                <th>ID</th>
+                                <th>Name</th>
+                                <th>Number of Parking</th>
+                                <th>Parking Limit</th>
+                                <th>Parking Ratio</th>
+                                <th> </th>
+                            </tr>
+                        </tfoot>
+                    </table>
+                </div>
+                <!-- /.box-body -->
             </div>
-            <div class="modal-body">
-          <div class="box box-warning">
-          <div class="box-header with-border">
-          </div>
-            <div class="box-body">
-              <div class="form-group">
-                <label>Select Costumer</label>
-                <select class="form-control">
-                  <option>Chistian Jelobadola</option>
-                  <option>Data</option>
-                </select>
-              </div>
-              <div class="form-group">
-                <label for="exampleInputEmail1">Review</label>
-                <textarea class="form-control" rows="3" placeholder="Enter ..."></textarea>
-              </div>
-              <div class="form-group">
-                <label for="exampleInputEmail1">Score</label>
-                <input type="text" class="form-control"   placeholder="Enter Score">
-              </div>
-            </div>
+            <!-- /.box -->
         </div>
-            </div>
-            <div class="modal-footer">
-              <button type="button" class="btn btn-danger pull-left" data-dismiss="modal">Close</button>
-              <button type="submit" class="btn btn-primary">Submit</button>
-            </div>
-          </div>
-          </form>
-        </div>
-        <!-- /.modal-dialog -->
-      </div>
-      <!-- /.modal -->            </div>
-          <!-- /.box-body -->
-        </div>
-        <!-- /.box -->
-      </div>
-      <!-- /.col -->
+        <!-- /.col -->
     </div>
     <!-- /.row -->
-  </section>
-  <!-- /.content -->
+</section>
+<!-- /.content -->
 </div>
 <!-- /.content-wrapper -->
-{%endblock content%}
+{% endblock content %}

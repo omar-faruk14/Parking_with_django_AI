@@ -5,7 +5,7 @@
 <head>
   <meta charset="utf-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
-  <title>Car Rental System</title>
+  <title>Car Parking System</title>
   <meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">
   <link rel="stylesheet" href="{% static 'bower_components/bootstrap/dist/css/bootstrap.min.css' %}">
   <link rel="stylesheet" href="{% static 'bower_components/font-awesome/css/font-awesome.min.css' %}">
@@ -39,7 +39,7 @@
       <!-- mini logo for sidebar mini 50x50 pixels -->
       <span class="logo-mini"><b><i class="fa fa-cab"></i></b></span>
       <!-- logo for regular state and mobile devices -->
-      <span class="logo-lg"><b><i class="fa fa-cab"></i> Car</b>Rental</span>
+      <span class="logo-lg"><b><i class="fa fa-cab"></i> Car</b>Parking</span>
     </a>
     <!-- Header Navbar: style can be found in header.less -->
     <nav class="navbar navbar-static-top">
@@ -98,7 +98,7 @@
       <ul class="sidebar-menu" data-widget="tree">
         <li class="header">Navigation Forms</li>
         <li class="active">
-          <a href="carreview.php">
+          <a href="{% url 'home'%}">
             <i class="fa fa-cab"></i> <span>Car Review</span>
           </a>
         </li>

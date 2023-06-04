@@ -1,0 +1,12 @@
+{% extends 'layout.html' %}  <!-- Assuming you have a base template -->
+
+{% block content %}
+  <h2>Add Parking Lot</h2>
+  <form method="post">
+    {% csrf_token %}  <!-- Include this for security reasons -->
+
+    {{ form.as_p }}  <!-- Render the form fields -->
+
+    <button type="submit">Submit</button>
+  </form>
+{% endblock %}
