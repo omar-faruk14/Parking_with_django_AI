@@ -1,0 +1,15 @@
+{% extends "layout.html" %}
+{% load static %}
+<div class="box-body">
+{% block content %}
+    <h1>Parking Lot Details</h1>
+    <p><strong> Parking Name:</strong> {{ parking_lot.name }}</p>
+    <p><strong>Number of Parking:</strong> {{ parking_lot.number_of_parking }}</p>
+    <form method="post" action="{% url 'parking_lot_detail' parking_lot.id %}">
+        {% csrf_token %}
+        <button class="btn btn-success btn-sm" type="submit" name="in">In</button>
+        <button class="btn btn-danger btn-sm" type="submit" name="out">Out</button>
+    </form>
+    </div>
+
+{% endblock %}

@@ -1,12 +1,10 @@
 {% extends "layout.html" %}
+{% load custom_filters %}
 {% block content %}
 {% load static %}
 
 <!-- Main content -->
-<section class="content">
-    <div class="row">
-        <div class="col-xs-12">
-            <div class="box">
+
                 <div class="box-header">
                     <h3 class="box-title"><i class="fa fa-cab"></i> Car Review Data Table</h3>
                     <button type="button" class="btn btn-success btn-sm" style="margin-left: 2%" data-toggle="modal"
@@ -77,14 +75,21 @@
                             </tr>
                         </thead>
                         <tbody>
+                            
                             {% for parking_lot in parking_lots %}
                             <tr>
                                 <td>{{ parking_lot.id }}</td>
-                                <td>{{ parking_lot.name }}</td>
+                                <td><a href="{% url 'parking_lot_detail' parking_lot.id %}">{{ parking_lot.name }}</a></td>
                                 <td>{{ parking_lot.number_of_parking }}</td>
                                 <td>{{ parking_lot.parking_limit }}</td>
+                              
 
-                                <td align="center"><span class="btn btn-info btn-xs">56%</span></td>
+                                <td>{% with available_capacity=parking_lot.parking_limit|subtract:parking_lot.number_of_parking %}
+                                    {% with available_percentage=available_capacity|multiply:100|div:parking_lot.parking_limit %}
+                                    {{ available_percentage|floatformat:2 }}
+                                        {% endwith %}
+                                            {% endwith %}</td>
+
                                 <td align="center">
                                     <button type="button" class="btn btn-primary btn-sm" data-toggle="modal"
                                         data-target="#edit{{ parking_lot.id }}"><i class="fa fa-pencil"></i></button>
@@ -93,6 +98,7 @@
                                         </button>                                        
                                 </td>
                             </tr>
+                            
                             <!-- Edit Modal -->
                             <div class="modal fade" id="edit{{ parking_lot.id }}">
                                 <div class="modal-dialog">
@@ -156,14 +162,7 @@
                         </tfoot>
                     </table>
                 </div>
-                <!-- /.box-body -->
-            </div>
-            <!-- /.box -->
-        </div>
-        <!-- /.col -->
-    </div>
-    <!-- /.row -->
-</section>
+                
 <!-- /.content -->
 </div>
 <!-- /.content-wrapper -->

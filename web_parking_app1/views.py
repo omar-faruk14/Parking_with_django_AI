@@ -3,8 +3,13 @@ from .models import ParkingLot
 from .forms import ParkingLotForm
 
 def home(request):
-    parking_lots=ParkingLot.objects.all()
-    return render(request,"carreview.html",{'parking_lots':parking_lots})
+    parking_lots = ParkingLot.objects.all()
+
+    for parking_lot in parking_lots:
+        available_percentage = (parking_lot.number_of_parking / parking_lot.parking_limit) * 100
+        parking_lot.available_percentage = round(available_percentage)
+
+    return render(request, 'carreview.html', {'parking_lots': parking_lots})
 
 
 from django.shortcuts import render
@@ -41,10 +46,30 @@ def update_parking_lot(request, pk):
         form = ParkingLotForm(instance=parking_lot)
 
     return render(request, 'edit_parking_lot.html', {'form': form, 'parking_lot': parking_lot})
+
+
 def delete_parking_lot(request, parking_lot_id):
     parking_lot = ParkingLot.objects.get(id=parking_lot_id)
     if request.method == 'POST':
         parking_lot.delete()
         return redirect('home')  # Redirect to the home page after deletion
     return HttpResponse("Deletion is not completed")
+
+
+def parking_lot_detail(request, parking_lot_id):
+    parking_lot = ParkingLot.objects.get(id=parking_lot_id)
+
+    if request.method == 'POST':
+        if 'in' in request.POST:
+            parking_lot.number_of_parking += 1
+            parking_lot.save()
+        elif 'out' in request.POST:
+            if parking_lot.number_of_parking > 0:
+                parking_lot.number_of_parking -= 1
+                parking_lot.save()
+
+    context = {
+        'parking_lot': parking_lot
+    }
+    return render(request, 'parking_lot_detail.html', context)
 
