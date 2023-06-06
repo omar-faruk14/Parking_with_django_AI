@@ -70,11 +70,11 @@
                         <table id="example1" class="table table-bordered table-striped">
                             <thead>
                             <tr style="background-color: #c5c5c5;">
-                                <th style="width: 10%"><i class="fa fa-user"></i> ID</th>
-                                <th style="width: 20%"><i class="fa fa-list-ol"></i> Name</th>
-                                <th style="width: 15%"><i class="fa fa-calendar"></i> Number of Parking</th>
-                                <th style="width: 15%"><i class="fa fa-user"></i> Parking Limit</th>
-                                <th style="width: 15%"><i class="fa fa-phone"></i> Parking Ratio</th>
+                                <th style="width: 7%"><i class="fa fa-list-ol"></i> ID</th>
+                                <th style="width: 23%"><i class="fa fa-user"></i>Parking Name</th>
+                                <th style="width: 15%"><i class="fa fa-car"></i> Number of Parking</th>
+                                <th style="width: 15%"><i class="fa fa-car"></i> Parking Limit</th>
+                                <th style="width: 15%"><i class="fa fa-percent"></i> Parking Ratio</th>
                                 <th style="width: 25%"></th>
                             </tr>
                             </thead>
@@ -91,7 +91,7 @@
                                             {% with available_percentage=available_capacity|multiply:100|div:parking_lot.parking_limit %}
                                                 {{ available_percentage|floatformat:2 }}
                                             {% endwith %}
-                                        {% endwith %}
+                                        {% endwith %}%
                                     </td>
                                     <td align="center">
                                         <button type="button" class="btn btn-primary btn-sm" data-toggle="modal"
