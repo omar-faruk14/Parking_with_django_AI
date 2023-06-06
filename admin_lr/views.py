@@ -1,16 +1,16 @@
-from django.shortcuts import render
-# Create your views here.
 from django.shortcuts import render, redirect
 from .forms import AdminRegistrationForm
 from django.contrib.auth import login
 from .forms import AdminLoginForm
 from web_parking_app1.models import ParkingLot
+from django.contrib.auth.decorators import login_required
 
-
+@login_required
 def dashboard(request):
-    username = request.user.username
+    user = request.user
     parking_lots = ParkingLot.objects.all()
-    return render(request, 'carreview.html', {'username': username,'parking_lots': parking_lots})
+    return render(request, 'carreview.html', {'user': user,'parking_lots': parking_lots})
+
 def register_admin(request):
     if request.method == 'POST':
         form = AdminRegistrationForm(request.POST)

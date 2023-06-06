@@ -3,8 +3,7 @@ from .models import ParkingLot
 from .forms import ParkingLotForm
 
 def home(request):
-    parking_lots = ParkingLot.objects.all()
-    return render(request, 'carreview.html', {'parking_lots': parking_lots})
+    return HttpResponse("Under Maintainance Page")
 
 
 from django.shortcuts import render
