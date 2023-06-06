@@ -4,11 +4,6 @@ from .forms import ParkingLotForm
 
 def home(request):
     parking_lots = ParkingLot.objects.all()
-
-    for parking_lot in parking_lots:
-        available_percentage = (parking_lot.number_of_parking / parking_lot.parking_limit) * 100
-        parking_lot.available_percentage = round(available_percentage)
-
     return render(request, 'carreview.html', {'parking_lots': parking_lots})
 
 

@@ -13,6 +13,7 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'web_parking_app1',
+    'admin_lr',
 ]
 
 MIDDLEWARE = [
@@ -75,7 +76,7 @@ AUTH_PASSWORD_VALIDATORS = [
         'NAME': 'django.contrib.auth.password_validation.NumericPasswordValidator',
     },
 ]
-
+AUTH_USER_MODEL = 'admin_lr.CustomUser'
 
 LANGUAGE_CODE = 'en-us'
 
