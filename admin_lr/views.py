@@ -1,6 +1,6 @@
 from django.shortcuts import render, redirect
 from .forms import AdminRegistrationForm
-from django.contrib.auth import login
+from django.contrib.auth import login,logout
 from .forms import AdminLoginForm
 from web_parking_app1.models import ParkingLot
 from django.contrib.auth.decorators import login_required
@@ -31,3 +31,8 @@ def login_admin(request):
     else:
         form = AdminLoginForm()
     return render(request, 'login.html', {'form': form})
+
+@login_required
+def logout_admin(request):
+    logout(request)
+    return redirect('login')  # Redirect to the login page after successful
