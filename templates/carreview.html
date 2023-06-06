@@ -1,171 +1,187 @@
 {% extends "layout.html" %}
 {% load custom_filters %}
+
 {% block content %}
-{% load static %}
-
-<!-- Main content -->
-
-                <div class="box-header">
-                    <h3 class="box-title"><i class="fa fa-cab"></i> Car Review Data Table</h3>
-                    <button type="button" class="btn btn-success btn-sm" style="margin-left: 2%" data-toggle="modal"
-                        data-target="#add">
-                        <i class="fa fa-plus"></i> Add
-                    </button>
-                    <div class="modal fade" id="add">
-                        <div class="modal-dialog">
-                            <form role="form" method="post" action="{% url 'add_parking_lot' %}">
-                                {% csrf_token %}
-                                <div class="modal-content">
-                                    <div class="modal-header">
-                                        <button type="button" class="close" data-dismiss="modal"
-                                            aria-label="Close">
-                                            <span aria-hidden="true">&times;</span>
-                                        </button>
-                                        <h4 class="modal-title">Parking Information</h4>
-                                    </div>
-                                    <div class="modal-body">
-                                        <div class="box box-primary">
-                                            <div class="box-header with-border">
-                                                <h3 class="box-title">Fill In :</h3>
-                                            </div>
-                                            <div class="box-body">
-                                                <div class="form-group">
-                                                    <label for="name">Name</label>
-                                                    <input type="text" class="form-control" id="name"
-                                                        name="name" placeholder="Enter Name">
+    <!-- Main content -->
+    <section class="content">
+        <div class="row">
+            <div class="col-xs-12">
+                <div class="box">
+                    <div class="box-header">
+                        <h3 class="box-title"><i class="fa fa-cab"></i> Car Parking Data Table</h3>
+                        <button type="button" class="btn btn-success btn-sm" style="margin-left: 2%" data-toggle="modal"
+                                data-target="#add">
+                            <i class="fa fa-plus"></i> Add
+                        </button>
+                        <!-- Add Modal -->
+                        <div class="modal fade" id="add">
+                            <div class="modal-dialog">
+                                <form role="form" method="post" action="{% url 'add_parking_lot' %}">
+                                    {% csrf_token %}
+                                    <div class="modal-content">
+                                        <div class="modal-header">
+                                            <button type="button" class="close" data-dismiss="modal"
+                                                    aria-label="Close">
+                                                <span aria-hidden="true">&times;</span>
+                                            </button>
+                                            <h4 class="modal-title">Parking Information</h4>
+                                        </div>
+                                        <div class="modal-body">
+                                            <div class="box box-primary">
+                                                <div class="box-header with-border">
+                                                    <h3 class="box-title">Fill In :</h3>
                                                 </div>
-                                                <div class="form-group">
-                                                    <label for="number_of_parking">Number of Parking</label>
-                                                    <input type="number" class="form-control"
-                                                        id="number_of_parking" name="number_of_parking"
-                                                        placeholder="Enter Number of Parking">
-                                                </div>
-                                                <div class="form-group">
-                                                    <label for="parking_limit">Parking Limit</label>
-                                                    <input type="number" class="form-control"
-                                                        id="parking_limit" name="parking_limit"
-                                                        placeholder="Enter Parking Limit">
+                                                <div class="box-body">
+                                                    <div class="form-group">
+                                                        <label for="name">Name</label>
+                                                        <input type="text" class="form-control" id="name"
+                                                               name="name" placeholder="Enter Name">
+                                                    </div>
+                                                    <div class="form-group">
+                                                        <label for="number_of_parking">Number of Parking</label>
+                                                        <input type="number" class="form-control"
+                                                               id="number_of_parking" name="number_of_parking"
+                                                               placeholder="Enter Number of Parking">
+                                                    </div>
+                                                    <div class="form-group">
+                                                        <label for="parking_limit">Parking Limit</label>
+                                                        <input type="number" class="form-control"
+                                                               id="parking_limit" name="parking_limit"
+                                                               placeholder="Enter Parking Limit">
+                                                    </div>
                                                 </div>
                                             </div>
                                         </div>
+                                        <div class="modal-footer">
+                                            <button type="button" class="btn btn-danger pull-left"
+                                                    data-dismiss="modal">Close
+                                            </button>
+                                            <button type="submit" class="btn btn-primary">Submit</button>
+                                        </div>
                                     </div>
-                                    <div class="modal-footer">
-                                        <button type="button" class="btn btn-danger pull-left"
-                                            data-dismiss="modal">Close</button>
-                                        <button type="submit" class="btn btn-primary">Submit</button>
-                                    </div>
-                                </div>
-                            </form>
+                                </form>
+                            </div>
+                            <!-- /.modal-dialog -->
                         </div>
-                        <!-- /.modal-dialog -->
+                        <!-- /.modal -->
                     </div>
-                    <!-- /.modal -->
-                </div>
-                <!-- /.box-header -->
-                <div class="box-body">
-                    <table id="example1" class="table table-bordered table-striped">
-                        <thead>
+                    <!-- /.box-header -->
+                    <div class="box-body">
+                        <table id="example1" class="table table-bordered table-striped">
+                            <thead>
                             <tr style="background-color: #c5c5c5;">
                                 <th style="width: 10%"><i class="fa fa-user"></i> ID</th>
                                 <th style="width: 20%"><i class="fa fa-list-ol"></i> Name</th>
                                 <th style="width: 15%"><i class="fa fa-calendar"></i> Number of Parking</th>
                                 <th style="width: 15%"><i class="fa fa-user"></i> Parking Limit</th>
                                 <th style="width: 15%"><i class="fa fa-phone"></i> Parking Ratio</th>
-                                <th style="width: 25%"> </th>
+                                <th style="width: 25%"></th>
                             </tr>
-                        </thead>
-                        <tbody>
-                            
+                            </thead>
+                            <tbody>
                             {% for parking_lot in parking_lots %}
-                            <tr>
-                                <td>{{ parking_lot.id }}</td>
-                                <td><a href="{% url 'parking_lot_detail' parking_lot.id %}">{{ parking_lot.name }}</a></td>
-                                <td>{{ parking_lot.number_of_parking }}</td>
-                                <td>{{ parking_lot.parking_limit }}</td>
-                              
-
-                                <td>{% with available_capacity=parking_lot.parking_limit|subtract:parking_lot.number_of_parking %}
-                                    {% with available_percentage=available_capacity|multiply:100|div:parking_lot.parking_limit %}
-                                    {{ available_percentage|floatformat:2 }}
+                                <tr>
+                                    <td>{{ parking_lot.id }}</td>
+                                    <td><a href="{% url 'parking_lot_detail' parking_lot.id %}">{{ parking_lot.name }}</a>
+                                    </td>
+                                    <td>{{ parking_lot.number_of_parking }}</td>
+                                    <td>{{ parking_lot.parking_limit }}</td>
+                                    <td>
+                                        {% with available_capacity=parking_lot.parking_limit|subtract:parking_lot.number_of_parking %}
+                                            {% with available_percentage=available_capacity|multiply:100|div:parking_lot.parking_limit %}
+                                                {{ available_percentage|floatformat:2 }}
+                                            {% endwith %}
                                         {% endwith %}
-                                            {% endwith %}</td>
-
-                                <td align="center">
-                                    <button type="button" class="btn btn-primary btn-sm" data-toggle="modal"
-                                        data-target="#edit{{ parking_lot.id }}"><i class="fa fa-pencil"></i></button>
-                                        <button type="button" class="btn btn-danger btn-sm" onclick="deleteParkingLot({{ parking_lot.id }})">
+                                    </td>
+                                    <td align="center">
+                                        <button type="button" class="btn btn-primary btn-sm" data-toggle="modal"
+                                                data-target="#edit{{ parking_lot.id }}"><i class="fa fa-pencil"></i>
+                                        </button>
+                                        <button type="button" class="btn btn-danger btn-sm"
+                                                onclick="deleteParkingLot({{ parking_lot.id }})">
                                             <i class="fa fa-trash"></i> Delete
-                                        </button>                                        
-                                </td>
-                            </tr>
-                            
-                            <!-- Edit Modal -->
-                            <div class="modal fade" id="edit{{ parking_lot.id }}">
-                                <div class="modal-dialog">
-                                    <form role="form" method="post" action="{% url 'update_parking_lot' parking_lot.id %}">
-                                        {% csrf_token %}
-                                        <div class="modal-content">
-                                            <div class="modal-header">
-                                                <button type="button" class="close" data-dismiss="modal"
-                                                    aria-label="Close">
-                                                    <span aria-hidden="true">&times;</span>
-                                                </button>
-                                                <h4 class="modal-title">Update Parking Lot</h4>
-                                            </div>
-                                            <div class="modal-body">
-                                                <div class="box box-warning">
-                                                    <div class="box-header with-border">
-                                                    </div>
-                                                    <div class="box-body">
-                                                        <div class="form-group">
-                                                            <label for="name">Name</label>
-                                                            <input type="text" class="form-control" id="name"
-                                                                name="name" value="{{ parking_lot.name }}">
+                                        </button>
+                                    </td>
+                                </tr>
+                                <!-- Edit Modal -->
+                                <div class="modal fade" id="edit{{ parking_lot.id }}">
+                                    <div class="modal-dialog">
+                                        <form role="form"
+                                              method="post"
+                                              action="{% url 'update_parking_lot' parking_lot.id %}">
+                                            {% csrf_token %}
+                                            <div class="modal-content">
+                                                <div class="modal-header">
+                                                    <button type="button" class="close" data-dismiss="modal"
+                                                            aria-label="Close">
+                                                        <span aria-hidden="true">&times;</span>
+                                                    </button>
+                                                    <h4 class="modal-title">Update Parking Lot</h4>
+                                                </div>
+                                                <div class="modal-body">
+                                                    <div class="box box-warning">
+                                                        <div class="box-header with-border">
                                                         </div>
-                                                        <div class="form-group">
-                                                            <label for="number_of_parking">Number of Parking</label>
-                                                            <input type="number" class="form-control"
-                                                                id="number_of_parking" name="number_of_parking"
-                                                                value="{{ parking_lot.number_of_parking }}">
-                                                        </div>
-                                                        <div class="form-group">
-                                                            <label for="parking_limit">Parking Limit</label>
-                                                            <input type="number" class="form-control"
-                                                                id="parking_limit" name="parking_limit"
-                                                                value="{{ parking_lot.parking_limit }}">
+                                                        <div class="box-body">
+                                                            <div class="form-group">
+                                                                <label for="name">Name</label>
+                                                                <input type="text" class="form-control" id="name"
+                                                                       name="name"
+                                                                       value="{{ parking_lot.name }}">
+                                                            </div>
+                                                            <div class="form-group">
+                                                                <label for="number_of_parking">Number of Parking</label>
+                                                                <input type="number" class="form-control"
+                                                                       id="number_of_parking" name="number_of_parking"
+                                                                       value="{{ parking_lot.number_of_parking }}">
+                                                            </div>
+                                                            <div class="form-group">
+                                                                <label for="parking_limit">Parking Limit</label>
+                                                                <input type="number" class="form-control"
+                                                                       id="parking_limit" name="parking_limit"
+                                                                       value="{{ parking_lot.parking_limit }}">
+                                                            </div>
                                                         </div>
                                                     </div>
                                                 </div>
+                                                <div class="modal-footer">
+                                                    <button type="button" class="btn btn-danger pull-left"
+                                                            data-dismiss="modal">Close
+                                                    </button>
+                                                    <button type="submit" class="btn btn-primary">Update</button>
+                                                </div>
                                             </div>
-                                            <div class="modal-footer">
-                                                <button type="button" class="btn btn-danger pull-left"
-                                                    data-dismiss="modal">Close</button>
-                                                <button type="submit" class="btn btn-primary">Update</button>
-                                            </div>
-                                        </div>
-                                    </form>
+                                        </form>
+                                    </div>
+                                    <!-- /.modal-dialog -->
                                 </div>
-                                <!-- /.modal-dialog -->
-                            </div>
-                            <!-- /.modal -->
+                                <!-- /.modal -->
                             {% endfor %}
-                        </tbody>
-                        <tfoot>
+                            </tbody>
+                            <tfoot>
                             <tr style="background-color: #c5c5c5;">
                                 <th>ID</th>
                                 <th>Name</th>
                                 <th>Number of Parking</th>
                                 <th>Parking Limit</th>
                                 <th>Parking Ratio</th>
-                                <th> </th>
+                                <th></th>
                             </tr>
-                        </tfoot>
-                    </table>
+                            </tfoot>
+                        </table>
+                    </div>
+                    <!-- /.box-body -->
                 </div>
-                
-<!-- /.content -->
+                <!-- /.box -->
+            </div>
+            <!-- /.col -->
+        </div>
+        <!-- /.row -->
+    </section>
+    <!-- /.content -->
 </div>
 <!-- /.content-wrapper -->
+{% block extra_scripts %}
 <script>
     function deleteParkingLot(parkingLotId) {
         if (confirm('Are you sure you want to delete this parking lot?')) {
@@ -177,13 +193,16 @@
                     'X-CSRFToken': '{{ csrf_token }}'
                 }
             })
-            .then(response => {
-                if (response.redirected) {
-                    window.location.href = response.url;  // Redirect to the parking lot list page
-                }
-            });
+                .then(response => {
+                    if (response.redirected) {
+                        window.location.href = response.url;  // Redirect to the parking lot list page
+                    }
+                });
         }
     }
 </script>
+{% endblock extra_scripts %}
 
 {% endblock content %}
+
+

@@ -1,4 +1,3 @@
-
 {% load static %}
 <!DOCTYPE html>
 <html>
@@ -27,19 +26,20 @@
   <![endif]-->
 
   <!-- Google Font -->
-  <link rel="stylesheet"
-        href="{% static 'https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,600,700,300italic,400italic,600italic' %}">
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,600,700,300italic,400italic,600italic">
+
+  {% block extra_styles %}{% endblock %}
 </head>
 <body class="hold-transition skin-blue sidebar-mini">
 <div class="wrapper">
 
   <header class="main-header">
     <!-- Logo -->
-    <a href="carreview.php" class="logo">
+    <a href="{% url 'home' %}" class="logo">
       <!-- mini logo for sidebar mini 50x50 pixels -->
       <span class="logo-mini"><b><i class="fa fa-cab"></i></b></span>
       <!-- logo for regular state and mobile devices -->
-      <span class="logo-lg"><b><i class="fa fa-cab"></i> Emi_Lab</b>Parking</span>
+      <span class="logo-lg"><b><i class="fa fa-cab"></i> Car</b>Parking</span>
     </a>
     <!-- Header Navbar: style can be found in header.less -->
     <nav class="navbar navbar-static-top">
@@ -50,128 +50,104 @@
         <span class="icon-bar"></span>
         <span class="icon-bar"></span>
       </a>
-      
+
+      <div class="navbar-custom-menu">
+        <ul class="nav navbar-nav">
+          <li class="dropdown user user-menu">
+            <a href="#" class="dropdown-toggle" data-toggle="dropdown">
+              <img src="{% static 'dist/img/avatar5.png' %}" class="user-image" alt="User Image">
+              <span class="hidden-xs">John Doe</span>
+            </a>
+            <ul class="dropdown-menu">
+              <!-- User image -->
+              <li class="user-header">
+                <img src="{% static 'dist/img/avatar5.png' %}" class="img-circle" alt="User Image">
+
+                <p>
+                  John Doe - Web Developer
+                  <small>Member since Nov. 2012</small>
+                </p>
+              </li>
+              <!-- Menu Footer-->
+              <li class="user-footer">
+                <div class="pull-left">
+                  <a href="#" class="btn btn-default btn-flat">Profile</a>
+                </div>
+                <div class="pull-right">
+                  <a href="#" class="btn btn-default btn-flat">Sign out</a>
+                </div>
+              </li>
+            </ul>
+          </li>
+        </ul>
+      </div>
     </nav>
   </header>
+
   <!-- Left side column. contains the logo and sidebar -->
   <aside class="main-sidebar">
     <!-- sidebar: style can be found in sidebar.less -->
     <section class="sidebar">
-      <!-- Sidebar user panel -->
+      <!-- Sidebar user panel (optional) -->
       <div class="user-panel">
         <div class="pull-left image">
-          <img src="dist/img/avatar5.png" class="img-circle" alt="User Image">
+          <img src="{% static 'dist/img/avatar5.png' %}" class="img-circle" alt="User Image">
         </div>
         <div class="pull-left info">
-          <p>Sample Name</p>
-          <a href="#"><i class="fa fa-circle text-success"></i> User</a>
+          <p>John Doe</p>
+          <!-- Status -->
+          <a href="#"><i class="fa fa-circle text-success"></i> Online</a>
         </div>
-      </div> 
-      <!-- sidebar menu: : style can be found in sidebar.less -->
+      </div>
+
+      <!-- Sidebar Menu -->
       <ul class="sidebar-menu" data-widget="tree">
-        <li class="header">Navigation Forms</li>
-        <li class="active">
-          <a href="{% url 'home'%}">
-            <i class="fa fa-cab"></i> <span>Car Review</span>
-          </a>
-        </li>
-        <li>
-          <a href="https://emi-lab.jp/">
-            <i class="fa fa-cab"></i> <span>Emi_Lab2</span>
-          </a>
-        </li>
-        <li>
-          <a href="https://emi-lab.jp/">
-            <i class="fa fa-cab"></i> <span>Emi_Lab3</span>
-          </a>
-        </li>
-        <li >
-          <a href="https://emi-lab.jp/">
-            <i class="fa fa-user-secret"></i> <span>User Account</span>
-          </a>
-        </li>
-        <li class="treeview">
-          <a href="#">
-            <i class="fa fa-laptop"></i>
-            <span>Emi_Lab4</span>
-            <span class="pull-right-container">
-              <i class="fa fa-angle-left pull-right"></i>
-            </span>
-          </a>
-          <ul class="treeview-menu">
-            <li><a href="#"><i class="fa fa-circle-o"></i> Car</a></li>
-            <li><a href="#"><i class="fa fa-circle-o"></i> Costumer</a></li>
-            <li><a href="#"><i class="fa fa-circle-o"></i> Car Owner</a></li>
-          </ul>
-        </li>
+        <li class="header">MAIN NAVIGATION</li>
+        <!-- Optionally, you can add icons to the links -->
+        <li><a href="{% url 'home' %}"><i class="fa fa-dashboard"></i> <span>Dashboard</span></a></li>
+        <li><a href="#"><i class="fa fa-car"></i> <span>Car Reviews</span></a></li>
+        <li><a href="#"><i class="fa fa-parking"></i> <span>Parking Lots</span></a></li>
       </ul>
+      <!-- /.sidebar-menu -->
     </section>
     <!-- /.sidebar -->
   </aside>
 
   <!-- Content Wrapper. Contains page content -->
   <div class="content-wrapper">
-    <!-- Content Header (Page header) -->
-    <section class="content-header">
-      <h1 align="center">
-        <i class="fa fa-cab"></i> Car Parking
-        <small></small>
-      </h1>
-    </section>
-
-
+    <!-- Main content -->
     <section class="content">
       <div class="row">
-          <div class="col-xs-12">
-              <div class="box">
+        <div class="col-md-12">
+          {% block content %}
+          {% endblock %}
+        </div>
+      </div>
+    </section>
+    <!-- /.content -->
+  </div>
+  <!-- /.content-wrapper -->
 
-
-
-
-    {% block content %}
-     
-    {% endblock content %}
-  
-
-
-     <!-- /.box-body -->
-    </div>
-    <!-- /.box -->
-</div>
-<!-- /.col -->
-</div>
-<!-- /.row -->
-</section>
-    
   <footer class="main-footer">
     <div class="pull-right hidden-xs">
+      <b>Version</b> 1.0.0
     </div>
-    <strong><a href="https://emi-lab.jp/">Car Parking System</a>.</strong>
+    <strong>Car Parking System</strong>
   </footer>
-
-  <!-- /.control-sidebar -->
-  <!-- Add the sidebar's background. This div must be placed
-       immediately after the control sidebar -->
-  <div class="control-sidebar-bg"></div>
 </div>
 <!-- ./wrapper -->
 
-<!-- jQuery 3 -->
 <script src="{% static 'bower_components/jquery/dist/jquery.min.js' %}"></script>
-<!-- Bootstra{% static 'p 3.3.7 -->
 <script src="{% static 'bower_components/bootstrap/dist/js/bootstrap.min.js' %}"></script>
-<!-- DataTabl{% static 'es -->
+<!-- DataTables -->
 <script src="{% static 'bower_components/datatables.net/js/jquery.dataTables.min.js' %}"></script>
 <script src="{% static 'bower_components/datatables.net-bs/js/dataTables.bootstrap.min.js' %}"></script>
-<!-- SlimScro{% static 'll -->
+<!-- SlimScroll -->
 <script src="{% static 'bower_components/jquery-slimscroll/jquery.slimscroll.min.js' %}"></script>
-<!-- FastClic{% static 'k -->
+<!-- FastClick -->
 <script src="{% static 'bower_components/fastclick/lib/fastclick.js' %}"></script>
-<!-- AdminLTE{% static ' App -->
+<!-- AdminLTE App -->
 <script src="{% static 'dist/js/adminlte.min.js' %}"></script>
-<!-- AdminLTE for demo purposes -->
-<script src="{% static 'dist/js/demo.js' %}"></script>
-<!-- page script -->
 <script>
   $(function () {
     $('#example1').DataTable()
@@ -185,5 +161,7 @@
     })
   })
 </script>
+
+{% block extra_scripts %}{% endblock %}
 </body>
 </html>
