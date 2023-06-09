@@ -4,6 +4,7 @@ from django.contrib.auth.forms import AuthenticationForm
 from django.contrib.auth.decorators import login_required, user_passes_test
 from .forms import UserRegistrationForm, AdminRegistrationForm
 from django.urls import reverse
+from web_parking_app1.models import ParkingLot
 def test(request):
     return HttpResponse("Hello login page test")
 
@@ -15,8 +16,9 @@ def user_dashboard(request):
 @login_required(login_url='admin_login')
 @user_passes_test(lambda u: u.is_admin)
 def admin_dashboard(request):
+    parking_lots = ParkingLot.objects.all()
     user = request.user
-    return render(request, 'login_Registrition/admin_dashboard.html', {'user': user})
+    return render(request, 'login_Registrition/admin_dashboard.html', {'user': user,'parking_lots':parking_lots})
 
 def register_user(request):
     if request.method == 'POST':
