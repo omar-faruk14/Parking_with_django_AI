@@ -25,7 +25,7 @@ def register_user(request):
         form = UserRegistrationForm(request.POST)
         if form.is_valid():
             form.save()
-            return redirect('login_Registrition/user_login')
+            return redirect('user_login')
     else:
         form = UserRegistrationForm()
     return render(request, 'login_Registrition/register_user.html', {'form': form})
@@ -46,7 +46,7 @@ def login_user(request):
         if form.is_valid():
             user = form.get_user()
             login(request, user)
-            return redirect('login_Registrition/user_dashboard.html')
+            return redirect('user_dashboard')
     else:
         form = AuthenticationForm()
     return render(request, 'login_Registrition/login_user.html', {'form': form})
@@ -57,18 +57,18 @@ def login_admin(request):
         if form.is_valid():
             user = form.get_user()
             login(request, user)
-            return redirect(reverse('admin_dashboard'))
+            return redirect('admin_dashboard')
     else:
         form = AuthenticationForm()
     return render(request, 'login_Registrition/login_admin.html', {'form': form})
 
-@login_required(login_url='login_Registrition/user_login')
+@login_required(login_url='user_login')
 def logout_user(request):
     logout(request)
-    return redirect('login_Registrition/user_login')
+    return redirect('user_login')
 
-@login_required(login_url='login_Registrition/admin_login')
+@login_required(login_url='admin_login')
 def logout_admin(request):
     logout(request)
-    return redirect('login_Registrition/admin_login')
+    return redirect('admin_login')
 
