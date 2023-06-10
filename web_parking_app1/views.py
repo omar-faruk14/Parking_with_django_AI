@@ -1,13 +1,13 @@
-from django.shortcuts import render,HttpResponse
+from django.shortcuts import render, HttpResponse , redirect, get_object_or_404
 from .models import ParkingLot
 from .forms import ParkingLotForm
-
+#===================================Home page==========================================
 def home(request):
-    parking_lots = ParkingLot.objects.all()
-    return render(request, 'carreview.html', {'parking_lots': parking_lots})
+    return render(request, 'user_page/home.html')
 
-from django.shortcuts import render
-from .forms import ParkingLotForm
+def user_parking_description(request):
+    parking_lots_user=ParkingLot.objects.all()
+    return render(request,"user_page/user_layout.html",{'parking_lots_user':parking_lots_user})
 
 def add_parking_lot(request):
     if request.method == 'POST':
@@ -19,9 +19,9 @@ def add_parking_lot(request):
         form = ParkingLotForm()
 
     return render(request, 'add_parking_lot.html', {'form': form})
-from django.shortcuts import render, redirect, get_object_or_404
-from .models import ParkingLot
-from .forms import ParkingLotForm
+
+
+
 
 def update_parking_lot(request, pk):
     parking_lot = get_object_or_404(ParkingLot, pk=pk)
