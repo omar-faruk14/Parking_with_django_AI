@@ -7,7 +7,7 @@ def home(request):
 
 def user_parking_description(request):
     parking_lots_user=ParkingLot.objects.all()
-    return render(request,"user_page/user_layout.html",{'parking_lots_user':parking_lots_user})
+    return render(request,"user_page/user_parking_information.html",{'parking_lots_user':parking_lots_user})
 
 def add_parking_lot(request):
     if request.method == 'POST':
