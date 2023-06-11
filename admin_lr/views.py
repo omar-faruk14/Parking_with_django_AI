@@ -11,7 +11,8 @@ def test(request):
 @login_required(login_url='user_login')
 def user_dashboard(request):
     user = request.user
-    return render(request, 'login_Registrition/user_dashboard.html', {'user': user})
+    parking_lots_user = ParkingLot.objects.all()
+    return render(request, 'user_page/user_parking_information.html', {'user': user,'parking_lots_user':parking_lots_user})
 
 @login_required(login_url='admin_login')
 @user_passes_test(lambda u: u.is_admin)
@@ -65,7 +66,7 @@ def login_admin(request):
 @login_required(login_url='user_login')
 def logout_user(request):
     logout(request)
-    return redirect('user_login')
+    return redirect('home')
 
 @login_required(login_url='admin_login')
 def logout_admin(request):

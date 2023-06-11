@@ -1,14 +1,129 @@
-<!DOCTYPE html>
-<html>
-<head>
-    <title>Admin Login</title>
-</head>
-<body>
-    <h1>Admin Login</h1>
-    <form method="post">
-        {% csrf_token %}
-        {{ form.as_p }}
-        <button type="submit">Login</button>
-    </form>
-</body>
-</html>
+{% extends "user_page/user_layout.html" %}
+{% load static %}
+{% load custom_filters %}
+{% block content%}
+<style>
+    .login-box {
+        width: 300px;
+        margin: 0 auto;
+      }
+      
+      .login-logo a {
+        display: block;
+        text-align: center;
+        margin-bottom: 15px;
+        font-size: 35px;
+        font-weight: bold;
+      }
+      
+      .login-box-body {
+        background: #fff;
+        padding: 20px;
+        border-radius: 5px;
+        box-shadow: 0px 0px 5px rgba(0, 0, 0, 0.3);
+      }
+      
+      .login-box-msg {
+        text-align: center;
+        margin-bottom: 15px;
+      }
+      
+      .form-group {
+        margin-bottom: 15px;
+      }
+      
+      .form-control {
+        height: 40px;
+        border-radius: 5px;
+      }
+      
+      .form-control-feedback {
+        position: absolute;
+        top: 0;
+        right: 0;
+        bottom: 0;
+        line-height: 40px;
+        padding-right: 10px;
+        color: #ccc;
+      }
+      
+      .checkbox {
+        margin-top: 10px;
+        margin-bottom: 10px;
+      }
+      
+      .btn-primary {
+        background-color: #3c8dbc;
+        border-color: #367fa9;
+        color: #fff;
+      }
+      
+      .btn-block {
+        width: 100%;
+      }
+      
+      .btn-flat {
+        border-radius: 0;
+      }
+      
+</style>
+    <!-- ======= Breadcrumbs ======= -->
+    <section id="breadcrumbs" class="breadcrumbs">
+        <div class="container">
+      
+          <ol>
+            <li><a href="{% url 'home' %}">Home</a></li>
+            <li>Admin Login</li>
+          </ol>
+          <h2 class='text-center'>Admin Login</h2>
+      
+        </div>
+      </section><!-- End Breadcrumbs --> 
+         
+
+<section>
+    <div class="login-box">
+        <div class="login-logo">
+            <a href="{% url 'home' %}"><b>Car</b>Parking</a>
+        </div>
+        <!-- /.login-logo -->
+        <div class="login-box-body">
+            <p class="login-box-msg">Log in to start your session</p>
+    
+            <form method="post">
+                {% csrf_token %}
+                <div class="form-group has-feedback">
+                    <input type="text" class="form-control" id="username" name="username" placeholder="Username">
+                    <span class="glyphicon glyphicon-user form-control-feedback"></span>
+                </div>
+                <div class="form-group has-feedback">
+                    <input type="password" class="form-control" id="password" name="password" placeholder="Password">
+                    <span class="glyphicon glyphicon-lock form-control-feedback"></span>
+                </div>
+                <div class="row">
+                    <div class="col-xs-8">
+                        <div class="checkbox icheck">
+                            <label>
+                                <input type="checkbox"> Remember Me
+                            </label>
+                        </div>
+                    </div>
+                    <!-- /.col -->
+                    <div class="col-xs-4">
+                        <button type="submit" class="btn btn-primary btn-block btn-flat">Sign In</button>
+                    </div>
+                    <!-- /.col -->
+                </div>
+                
+            </form>
+    
+            <!-- /.social-auth-links -->
+    
+        </div>
+        <!-- /.login-box-body -->
+    </div>
+</section>
+
+
+
+{% endblock content %}

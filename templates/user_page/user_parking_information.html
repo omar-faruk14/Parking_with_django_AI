@@ -2,18 +2,21 @@
 {% load static %}
 {% load custom_filters %}
 {% block content%}
-<!-- ======= Breadcrumbs ======= -->
-<section id="breadcrumbs" class="breadcrumbs">
-    <div class="container">
 
-      <ol>
-        <li><a href="index.html">Home</a></li>
-        <li>Parking Information</li>
-      </ol>
-      <h2 class='text-center'>Parking Information</h2>
-
-    </div>
-  </section><!-- End Breadcrumbs -->     
+    <!-- ======= Breadcrumbs ======= -->
+    <section id="breadcrumbs" class="breadcrumbs">
+        <div class="container">
+      
+          <ol>
+            <li><a href="index.html">Home</a></li>
+            <li>Parking Information</li>
+          </ol>
+          <h2 class='text-center'>Parking Information</h2>
+      
+        </div>
+      </section><!-- End Breadcrumbs --> 
+         
+    
   <section id="Parking_cardff" class="row row-cols-1 row-cols-md-2 row-cols-lg-3 g-4">
     {% for card in parking_lots_user %}
         <div class="col">
@@ -22,7 +25,7 @@
                     <h5 class="card-title" style="background-color: #ecf6fe; color: #043c6d;">{{ card.name }}</h5>
                     <p class="card-text">Number of Parking: {{ card.number_of_parking }}</p>
                     <p class="card-text">Parking Limit: {{ card.parking_limit }}</p>
-                    <p class="card-text">Parking Availability:
+                    <p class="card-text">Parking Status:
                         {% with available_capacity=card.parking_limit|subtract:card.number_of_parking %}
                             {% with available_percentage=available_capacity|multiply:100|div:card.parking_limit %}
                                 {% if available_percentage >= 90 %}
