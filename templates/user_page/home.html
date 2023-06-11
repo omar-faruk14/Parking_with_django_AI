@@ -70,8 +70,16 @@
             </ul>
           </li>
           {% else %}
-          <li class="nav-item">
-            <a class="nav-link" href="{% url 'user_login' %}">Login</a>
+          <li class="nav-item dropdown">
+            <a class="nav-link dropdown-toggle" href="{% url 'user_login' %}" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+              <span>Login</span>
+              <i class="bi bi-chevron-down"></i>
+            </a>
+            <ul class="dropdown-menu">
+              <li><a class="dropdown-item" href="{% url 'user_login' %}">User Login</a></li>
+              <li><a class="dropdown-item" href="{% url 'user_register' %}">User Register</a></li>
+              
+            </ul>
           </li>
           {% endif %}
 

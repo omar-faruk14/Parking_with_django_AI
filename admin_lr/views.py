@@ -5,6 +5,7 @@ from django.contrib.auth.decorators import login_required, user_passes_test
 from .forms import UserRegistrationForm, AdminRegistrationForm
 from django.urls import reverse
 from web_parking_app1.models import ParkingLot
+from django.contrib import messages
 def test(request):
     return HttpResponse("Hello login page test")
 
@@ -57,11 +58,15 @@ def login_admin(request):
         form = AuthenticationForm(request, data=request.POST)
         if form.is_valid():
             user = form.get_user()
-            login(request, user)
-            return redirect('admin_dashboard')
+            if user.is_admin:
+                login(request, user)
+                return redirect('admin_dashboard')
+            else:
+                messages.error(request, 'User is not admin')
     else:
         form = AuthenticationForm()
     return render(request, 'login_Registrition/login_admin.html', {'form': form})
+
 
 @login_required(login_url='user_login')
 def logout_user(request):
