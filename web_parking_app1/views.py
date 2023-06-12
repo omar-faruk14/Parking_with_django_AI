@@ -70,17 +70,6 @@ def parking_lot_detail(request, parking_lot_id):
 
 
 def map(request):
-    # Get the latitude, longitude, and zoom level from your data source
-    latitude = 35.933694
-    longitude = 138.036524
-    zoom_level = 10
-
-    context = {
-        'latitude': latitude,
-        'longitude': longitude,
-        'zoomLevel': zoom_level,
-    }
-
-    return render(request, 'user_page/map.html', context)
+    return render(request, 'user_page/map.html')
 
 

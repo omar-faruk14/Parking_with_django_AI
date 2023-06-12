@@ -11,8 +11,8 @@
   <meta content="" name="keywords">
 
   <!-- Favicons -->
-  <link href="{% static 'frontend/assets/img/favicon.png' %}" rel="icon">
-  <link href="{% static 'frontend/assets/img/apple-touch-icon.png' %}" rel="apple-touch-icon">
+  <link href="{% static 'dist/img/cropped-site_icon-32x32.png' %}" rel="icon">
+  <link href="{% static 'dist/img/cropped-site_icon-32x32.png' %}" rel="apple-touch-icon">
 
   <!-- Google Fonts -->
   <link href="https://fonts.googleapis.com/css?family=Open+Sans:300,300i,400,400i,600,600i,700,700i|Raleway:300,300i,400,400i,500,500i,600,600i,700,700i|Poppins:300,300i,400,400i,500,500i,600,600i,700,700i" rel="stylesheet">
@@ -48,7 +48,7 @@
   <header id="header" class="fixed-top d-flex align-items-center ">
     <div class="container d-flex align-items-center justify-content-between">
 
-      <h1 class="logo"><a href="index.html">Emi-Lab Parking</a></h1>
+      <h1 class="logo"><a href="{% url 'home' %}">Emi-Lab Parking</a></h1>
       <!-- Uncomment below if you prefer to use an image logo -->
       <!-- <a href=index.html" class="logo"><img src="assets/img/logo.png" alt="" class="img-fluid"></a>-->
 
@@ -131,7 +131,7 @@
 
         <div class="section-title">
           <h2>About Us</h2>
-          <p>Magnam dolores commodi suscipit. Necessitatibus eius consequatur ex aliquid fuga eum quidem. Sit sint consectetur velit. Quisquam quos quisquam cupiditate. Et nemo qui impedit suscipit alias ea. Quia fugiat sit in iste officiis commodi quidem hic quas.</p>
+          <p>This website is about online parking management and organization.</p>
         </div>
 
       </div>
@@ -153,14 +153,14 @@
             <div class="icon-box">
               <i class="bi bi-info-square-fill"></i>
               <h4><a href="{% url 'user_parking_description' %}">Parking Information</a></h4>
-              <p>Voluptatum deleniti atque corrupti quos dolores et quas molestias excepturi sint occaecati cupiditate non provident</p>
+              <p>駐車場の最新情報はこちらからご覧いただけます。</p>
             </div>
           </div>
           <div class="col-md-6 d-flex align-items-stretch mt-4 mt-md-0" data-aos="fade-up" data-aos-delay="200">
             <div class="icon-box">
-              <i class="bi bi-card-checklist"></i>
-              <h4><a href="#">Map</a></h4>
-              <p>Minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat tarad limino ata</p>
+              <i class="bi bi-geo-alt"></i>
+              <h4><a href="{% url 'map' %}">Map</a></h4>
+              <p>ここをクリックすると駐車場マップが表示されます。</p>
             </div>
           </div>
           
@@ -170,26 +170,29 @@
       </div>
     </section><!-- End Services Section -->
 
-    <!-- ======= Cta Section ======= -->
-    <section id="cta" class="cta">
-      <div class="container">
 
-        <div class="row" data-aos="zoom-in">
-          <div class="col-lg-9 text-center text-lg-start">
-            <h3>Call To Action</h3>
-            <p> Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p>
-          </div>
-          <div class="col-lg-3 cta-btn-container text-center">
-            <a class="cta-btn align-middle" href="#">Call To Action</a>
-          </div>
-        </div>
+  
 
+   <!-- ======= Cta Section ======= -->
+<section id="cta" class="cta">
+  <div class="container">
+    <div class="row" data-aos="zoom-in">
+      <div class="col-lg-9 text-center text-lg-start">
+        <h3>Call To Action</h3>
+        <p> 必要に応じて電話してください。</p>
       </div>
-    </section><!-- End Cta Section -->
+      <div class="col-lg-3 cta-btn-container text-center">
+        <a class="cta-btn align-middle" href="tel:026-217-8390">Call To Action<p>026-217-8390</p></a>
+      </div>
+    </div>
+  </div>
+</section><!-- End Cta Section -->
+<br>
+<br>
 
-    
+   <!--
 
-    <!-- ======= Contact Section ======= -->
+ 
     <section id="contact" class="contact">
       <div class="container" data-aos="fade-up">
 
@@ -253,7 +256,8 @@
         </div>
 
       </div>
-    </section><!-- End Contact Section -->
+    </section>
+    --> 
 
   </main><!-- End #main -->
 
