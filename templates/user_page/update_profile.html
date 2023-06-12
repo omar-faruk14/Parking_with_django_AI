@@ -1,0 +1,23 @@
+{% extends 'user_page/user_layout.html' %}
+
+
+{% block content %}
+
+<!-- ======= Breadcrumbs ======= -->
+<section id="breadcrumbs" class="breadcrumbs">
+    <div class="container">
+
+      <ol>
+        <li><a href="index.html">Home</a></li>
+        <li>Momiji Lake</li>
+      </ol>
+      <h2 class='text-center'>Momiji Lake</h2>
+
+    </div>
+  <h2>Update Profile</h2>
+  <form method="post" enctype="multipart/form-data">
+    {% csrf_token %}
+    {{ form.as_p }}
+    <button type="submit">Update</button>
+  </form>
+{% endblock %}

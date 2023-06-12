@@ -1,0 +1,29 @@
+{% extends 'user_page/user_layout.html' %}
+
+{% block content %}
+
+<!-- ======= Breadcrumbs ======= -->
+<section id="breadcrumbs" class="breadcrumbs">
+    <div class="container">
+
+      <ol>
+        <li><a href="index.html">Home</a></li>
+        <li>Momiji Lake</li>
+      </ol>
+      <h2 class='text-center'>Momiji Lake</h2>
+
+    </div>
+</section><!-- End Breadcrumbs --> 
+  <h2>Profile Information</h2>
+  <div class="profile-info">
+    <p><strong>Username:</strong> {{ user.username }}</p>
+    <p><strong>Email:</strong> {{ user.email }}</p>
+    <p><strong>Full Name:</strong> {{ user.full_name }}</p>
+    <p><strong>Profile Picture:</strong></p>
+    {% if user.profile_picture %}
+      <img src="{{ user.profile_picture.url }}" alt="Profile Picture">
+    {% else %}
+      <p>No profile picture uploaded.</p>
+    {% endif %}
+  </div>
+{% endblock %}

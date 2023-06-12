@@ -6,6 +6,8 @@ from .forms import UserRegistrationForm, AdminRegistrationForm
 from django.urls import reverse
 from web_parking_app1.models import ParkingLot
 from django.contrib import messages
+from .forms import UserProfileForm
+
 def test(request):
     return HttpResponse("Hello login page test")
 
@@ -77,4 +79,23 @@ def logout_user(request):
 def logout_admin(request):
     logout(request)
     return redirect('admin_login')
+
+
+#========================Profile Update===========================
+@login_required(login_url='user_login')
+def profile(request):
+    user = request.user
+    return render(request, 'user_page/profile.html', {'user': user})
+
+@login_required(login_url='user_login')
+def update_profile(request):
+    if request.method == 'POST':
+        form = UserProfileForm(request.POST, request.FILES, instance=request.user)
+        if form.is_valid():
+            form.save()
+            messages.success(request, 'Profile updated successfully.')
+            return redirect('profile')
+    else:
+        form = UserProfileForm(instance=request.user)
+    return render(request, 'user_page/update_profile.html', {'form': form})
 
