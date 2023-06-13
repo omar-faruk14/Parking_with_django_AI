@@ -6,6 +6,20 @@
 <section class="content">
     <div class="row text-center"> <!-- Add the 'text-center' class here -->
         <div class="col-xs-12 col-md-6 col-md-offset-3"> <!-- Use 'col-md-offset-3' to center align the column -->
+            <!-- Display messages -->
+            {% if messages %}
+            <div class="messages">
+                {% for message in messages %}
+                <div class="alert alert-{{ message.tags }} alert-dismissible" role="alert">
+                    {{ message }}
+                    <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                {% endfor %}
+            </div>
+            {% endif %}
+
             <div class="box">
                 <div class="box-header">
                     <h1>Parking Lot Details</h1>
@@ -16,9 +30,20 @@
                     <p><strong><b>Parking Name (駐車場名):</strong> {{ parking_lot.name }}</b></p>
                     <p><strong>Number of Parking (駐車台数):</strong> {{ parking_lot.number_of_parking }}</p>
                     <p class="text-red"><strong>Parking Limit (駐車可能台数):</strong> {{ parking_lot.parking_limit }}</p>
-                    <form method="post" action="{% url 'parking_lot_detail' parking_lot.id %}">
+                    <form method="post" action="{% url 'parking_lot_detail' parking_lot_id=parking_lot.id %}">
                         {% csrf_token %}
+                        <div class="form-group">
+                            <label for="vehicle_name">Vehicle Name:</label>
+                            <input type="text" class="form-control" id="vehicle_name" name="vehicle_name" placeholder="Enter Vehicle Name" required>
+                        </div>
                         <button class="btn btn-success btn-sm" type="submit" name="in">In</button>
+                    </form>
+                    <form method="post" action="{% url 'parking_lot_detail' parking_lot_id=parking_lot.id %}">
+                        {% csrf_token %}
+                        <div class="form-group">
+                            <label for="entry_id">Entry ID:</label>
+                            <input type="text" class="form-control" id="entry_id" name="entry_id" placeholder="Enter Entry ID" required>
+                        </div>
                         <button class="btn btn-danger btn-sm" type="submit" name="out">Out</button>
                     </form>
                 </div>
