@@ -1,6 +1,8 @@
 from django.shortcuts import render, HttpResponse , redirect, get_object_or_404
 from .models import ParkingLot
 from .forms import ParkingLotForm
+from .models import ParkingLot, VehicleEntry
+from django.utils import timezone
 #===================================Home page==========================================
 def home(request):
     return render(request, 'user_page/home.html')
@@ -48,24 +50,50 @@ def delete_parking_lot(request, parking_lot_id):
         parking_lot.delete()
         return redirect('home')  # Redirect to the home page after deletion
     return HttpResponse("Deletion is not completed")
+#====================parking lot in out============================
+
+
 
 
 def parking_lot_detail(request, parking_lot_id):
-    parking_lot = ParkingLot.objects.get(id=parking_lot_id)
+    parking_lot = get_object_or_404(ParkingLot, id=parking_lot_id)
 
     if request.method == 'POST':
         if 'in' in request.POST:
-            parking_lot.number_of_parking += 1
-            parking_lot.save()
+            vehicle_name = 'Vehicle In'  # Replace with the appropriate vehicle name
+            entry = VehicleEntry.objects.create(parking_lot=parking_lot, vehicle_name=vehicle_name)
+            entry.save()
         elif 'out' in request.POST:
-            if parking_lot.number_of_parking > 0:
-                parking_lot.number_of_parking -= 1
-                parking_lot.save()
+            entry = parking_lot.vehicleentry_set.filter(exit_time__isnull=True).first()
+            if entry:
+                entry.exit_time = timezone.now()
+                entry.save()
 
     context = {
         'parking_lot': parking_lot
     }
-    return render(request, 'parking_lot_detail.html', context)
+    return render(request, 'parking_lot_in_out.html', context)
+
+
+
+
+
+# def parking_lot_detail(request, parking_lot_id):
+#     parking_lot = ParkingLot.objects.get(id=parking_lot_id)
+
+#     if request.method == 'POST':
+#         if 'in' in request.POST:
+#             parking_lot.number_of_parking += 1
+#             parking_lot.save()
+#         elif 'out' in request.POST:
+#             if parking_lot.number_of_parking > 0:
+#                 parking_lot.number_of_parking -= 1
+#                 parking_lot.save()
+
+#     context = {
+#         'parking_lot': parking_lot
+#     }
+#     return render(request, 'parking_lot_detail.html', context)
 
 
 

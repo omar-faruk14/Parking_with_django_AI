@@ -1,0 +1,63 @@
+{% extends "layout.html" %}
+{% load static %}
+{% block content %}
+
+<!-- Main content -->
+<section class="content">
+    <div class="row text-center"> <!-- Add the 'text-center' class here -->
+        <div class="col-xs-12 col-md-6 col-md-offset-3"> <!-- Use 'col-md-offset-3' to center align the column -->
+            <div class="box">
+                <div class="box-header">
+                    <h1>Parking Lot Details</h1>
+                    <p>車の出入りボタン</p>
+                </div>
+                <!-- /.box-header -->
+                <div class="box-body">
+                    <p><strong><b>Parking Name (駐車場名):</strong> {{ parking_lot.name }}</b></p>
+                    <p><strong>Number of Parking (駐車台数):</strong> {{ parking_lot.number_of_parking }}</p>
+                    <p class="text-red"><strong>Parking Limit (駐車可能台数):</strong> {{ parking_lot.parking_limit }}</p>
+                    <form method="post" action="{% url 'parking_lot_detail' parking_lot.id %}">
+                        {% csrf_token %}
+                        <button class="btn btn-success btn-sm" type="submit" name="in">In</button>
+                        <button class="btn btn-danger btn-sm" type="submit" name="out">Out</button>
+                    </form>
+                </div>
+                <!-- /.box-body -->
+            </div>
+            <!-- /.box -->
+
+            <!-- Vehicle Entries Table -->
+            <div class="box">
+                <div class="box-header">
+                    <h2>Vehicle Entries</h2>
+                </div>
+                <div class="box-body">
+                    <table class="table table-striped">
+                        <thead>
+                            <tr>
+                                <th>Vehicle Name</th>
+                                <th>Entry Time</th>
+                                <th>Exit Time</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {% for entry in parking_lot.vehicleentry_set.all %}
+                            <tr>
+                                <td>{{ entry.vehicle_name }}</td>
+                                <td>{{ entry.entry_time }}</td>
+                                <td>{{ entry.exit_time|default:"N/A" }}</td>
+                            </tr>
+                            {% endfor %}
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+            <!-- /.box -->
+        </div>
+        <!-- /.col -->
+    </div>
+    <!-- /.row -->
+</section>
+<!-- /.content -->
+
+{% endblock %}

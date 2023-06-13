@@ -7,3 +7,12 @@ class ParkingLot(models.Model):
 
     def __str__(self):
         return self.name
+
+class VehicleEntry(models.Model):
+    parking_lot = models.ForeignKey(ParkingLot, on_delete=models.CASCADE)
+    vehicle_name = models.CharField(max_length=255)
+    entry_time = models.DateTimeField(auto_now_add=True)
+    exit_time = models.DateTimeField(null=True, blank=True)
+
+    def __str__(self):
+        return self.vehicle_name
