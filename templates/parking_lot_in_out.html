@@ -51,38 +51,63 @@
             </div>
             <!-- /.box -->
 
-            <!-- Vehicle Entries Table -->
-            <div class="box">
-                <div class="box-header">
-                    <h2>Vehicle Entries</h2>
-                </div>
-                <div class="box-body">
-                    <table class="table table-striped">
-                        <thead>
-                            <tr>
-                                <th>Vehicle registration Name</th>
-                                <th>Entry Time</th>
-                                <th>Exit Time</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            {% for entry in parking_lot.vehicleentry_set.all %}
-                            <tr>
-                                <td>{{ entry.vehicle_registration_Name }}</td>
-                                <td>{{ entry.entry_time }}</td>
-                                <td>{{ entry.exit_time|default:"N/A" }}</td>
-                            </tr>
-                            {% endfor %}
-                        </tbody>
-                    </table>
-                </div>
-            </div>
-            <!-- /.box -->
+           <!-- Vehicle Entries Table -->
+<div class="box">
+    <div class="box-header">
+        <h2>Vehicle Entries</h2>
+    </div>
+    <div class="box-body">
+        <table class="table table-striped">
+            <thead>
+                <tr>
+                    <th>Vehicle registration Name</th>
+                    <th>Entry Time</th>
+                    <th>Exit Time</th>
+                    <th>Print</th> <!-- Added a new column for the print button -->
+                </tr>
+            </thead>
+            <tbody>
+                {% for entry in parking_lot.vehicleentry_set.all %}
+                <tr>
+                    <td>{{ entry.vehicle_registration_Name }}</td>
+                    <td>{{ entry.entry_time }}</td>
+                    <td>{{ entry.exit_time|default:"N/A" }}</td>
+                    <td>
+                        <button class="btn btn-primary btn-sm" onclick="printRow('{{ entry.vehicle_registration_Name }}', '{{ entry.entry_time }}', '{{ entry.exit_time|default:"N/A" }}')">Print</button>
+                    </td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+</div>
+<!-- /.box -->
         </div>
         <!-- /.col -->
     </div>
     <!-- /.row -->
 </section>
 <!-- /.content -->
+<script>
+    function printRow(vehicleName, entryTime, exitTime) {
+        var printContents = '<div style="text-align: center; padding: 20px;">' +
+            '<h3 style="text-decoration: underline;">Vehicle Details</h3>' +
+            '<p style="margin: 10px;"><strong>Vehicle Registration Name:</strong> ' + vehicleName + '</p>' +
+            '<p style="margin: 10px;"><strong>Entry Time:</strong> ' + entryTime + '</p>' +
+            '<p style="margin: 10px;"><strong>Exit Time:</strong> ' + (exitTime === 'N/A' ? 'N/A' : exitTime) + '</p>' +
+            '</div>';
+
+        var popupWin = window.open('', '_blank', 'fullscreen=yes');
+        popupWin.document.open();
+        popupWin.document.write('<html><head><title>Print</title>' +
+            '<style>@media print { body { margin: 0; } }</style>' +
+            '</head><body onload="window.print()">' + printContents + '</body></html>');
+        popupWin.document.close();
+    }
+</script>
+
+
+
+
 
 {% endblock %}

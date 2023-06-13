@@ -33,7 +33,7 @@ def update_parking_lot(request, pk):
         if form.is_valid():
             form.save()
             # Redirect to the home page or display a success message
-            return home(request)
+            return redirect('user_dashboard')
         else:
             # Display an error message or notification if the form is invalid
             error_message = 'Failed to update parking lot. Please check the form inputs.'
@@ -53,20 +53,13 @@ def delete_parking_lot(request, parking_lot_id):
 #====================parking lot in out============================
 
 
-
-from django.shortcuts import render, get_object_or_404
-from django.utils import timezone
-from django.contrib import messages
-
-from .models import ParkingLot, VehicleEntry
-
 def parking_lot_detail(request, parking_lot_id):
     parking_lot = get_object_or_404(ParkingLot, id=parking_lot_id)
 
     if request.method == 'POST':
         if 'in' in request.POST:
-            vehicle_registration_Name = request.POST.get('vehicle_name')
-            entry = VehicleEntry.objects.create(parking_lot=parking_lot, vehicle_registration_Namee=vehicle_registration_Name)
+            vehicle_registration_Name = request.POST.get('vehicle_registration_Name')
+            entry = VehicleEntry.objects.create(parking_lot=parking_lot, vehicle_registration_Name=vehicle_registration_Name)
             entry.save()
             parking_lot.number_of_parking += 1  # Increase the count of parking by 1
             parking_lot.save()

@@ -47,6 +47,8 @@ TEMPLATES = [
 
 WSGI_APPLICATION = 'Web_Parking.wsgi.application'
 TEMPLATE_DIR = os.path.join(BASE_DIR,"templates")
+
+
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.mysql',
@@ -80,7 +82,7 @@ AUTH_USER_MODEL = 'admin_lr.CustomUser'
 
 LANGUAGE_CODE = 'en-us'
 
-TIME_ZONE = 'UTC'
+TIME_ZONE = 'Asia/Tokyo'
 
 USE_I18N = True
 

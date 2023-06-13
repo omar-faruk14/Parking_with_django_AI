@@ -18,6 +18,10 @@
        folder instead of downloading all of them to reduce the load. -->
   <link rel="stylesheet" href="{% static 'dist/css/skins/_all-skins.min.css' %}">
 
+   <!-- Favicons -->
+   <link href="{% static 'dist/img/cropped-site_icon-32x32.png' %}" rel="icon">
+   <link href="{% static 'dist/img/cropped-site_icon-32x32.png' %}" rel="apple-touch-icon">
+
   <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
   <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
   <!--[if lt IE 9]>
@@ -65,7 +69,11 @@
             <ul class="dropdown-menu">
               <!-- User image -->
               <li class="user-header">
-                <img src="{% static 'dist/img/avatar5.png' %}" class="img-circle" alt="User Image">
+                {% if user.profile_picture %}
+                      <img src="{{ user.profile_picture.url }}" class="img-circle" alt="User Image">
+                  {% else %}
+                  <img src="{% static 'dist/img/avatar5.png' %}" class="img-circle" alt="User Image">
+                  {% endif %}
 
                 <p>
                   {{user.full_name}}
@@ -109,8 +117,6 @@
         <li class="header">MAIN NAVIGATION</li>
         <!-- Optionally, you can add icons to the links -->
         <li><a href="{% url 'admin_dashboard' %}"><i class="fa fa-dashboard"></i> <span>Dashboard</span></a></li>
-        <li><a href="#"><i class="fa fa-car"></i> <span>Car Reviews</span></a></li>
-        <li><a href="#"><i class="fa fa-parking"></i> <span>Parking Lots</span></a></li>
       </ul>
       <!-- /.sidebar-menu -->
     </section>

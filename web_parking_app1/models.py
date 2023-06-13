@@ -10,7 +10,7 @@ class ParkingLot(models.Model):
 
 class VehicleEntry(models.Model):
     parking_lot = models.ForeignKey(ParkingLot, on_delete=models.CASCADE)
-    vehicle_registration_Name = models.CharField(max_length=255)
+    vehicle_registration_Name = models.CharField(max_length=255, unique=True, null=False)
     entry_time = models.DateTimeField(auto_now_add=True)
     exit_time = models.DateTimeField(null=True, blank=True)
 
