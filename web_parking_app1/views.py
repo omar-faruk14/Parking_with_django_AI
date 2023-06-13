@@ -56,7 +56,7 @@ def delete_parking_lot(request, parking_lot_id):
 
 from django.shortcuts import render, get_object_or_404
 from django.utils import timezone
-from django.contrib import messages  # Import messages
+from django.contrib import messages
 
 from .models import ParkingLot, VehicleEntry
 
@@ -65,23 +65,26 @@ def parking_lot_detail(request, parking_lot_id):
 
     if request.method == 'POST':
         if 'in' in request.POST:
-            vehicle_name = request.POST.get('vehicle_name')  # Get the vehicle name from the form
-            entry = VehicleEntry.objects.create(parking_lot=parking_lot, vehicle_name=vehicle_name)
+            vehicle_registration_Name = request.POST.get('vehicle_name')
+            entry = VehicleEntry.objects.create(parking_lot=parking_lot, vehicle_registration_Namee=vehicle_registration_Name)
             entry.save()
+            parking_lot.number_of_parking += 1  # Increase the count of parking by 1
+            parking_lot.save()
         elif 'out' in request.POST:
-            entry_id = request.POST.get('entry_id')  # Get the entry ID from the form
-            entry = parking_lot.vehicleentry_set.filter(id=entry_id, exit_time__isnull=True).first()
+            entry_id = request.POST.get('entry_id')
+            entry = parking_lot.vehicleentry_set.filter(vehicle_registration_Name=entry_id, exit_time__isnull=True).first()
             if entry:
                 entry.exit_time = timezone.now()
                 entry.save()
+                parking_lot.number_of_parking -= 1  # Decrease the count of parking by 1
+                parking_lot.save()
             else:
-                messages.error(request, 'Entry ID not found.')  # Display error message
+                messages.error(request, 'Entry ID not found.')
 
     context = {
         'parking_lot': parking_lot
     }
     return render(request, 'parking_lot_in_out.html', context)
-
 
 
 
