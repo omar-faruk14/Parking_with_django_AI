@@ -27,17 +27,18 @@
                     <p class="card-text">Parking Limit: {{ card.parking_limit }}</p>
                     <p class="card-text">Parking Status:
                         {% with available_capacity=card.parking_limit|subtract:card.number_of_parking %}
-                            {% with available_percentage=available_capacity|multiply:100|div:card.parking_limit %}
-                                {% if available_percentage >= 90 %}
-                                    Almost Full ({{available_percentage|floatformat:2  }}% available)
-                                {% elif available_percentage >= 75 %}
-                                    Low ({{available_percentage|floatformat:2  }}% available)
-                                {% else %}
-                                    Empty ({{available_percentage|floatformat:2  }}% available)
-                                {% endif %}
-                            {% endwith %}
+                          {% with available_percentage=available_capacity|multiply:100|div:card.parking_limit %}
+                            {% if available_percentage <= 10 %}
+                              Almost Full ({{ available_percentage|floatformat:2 }}% available)
+                            {% elif available_percentage <= 25 and available_percentage > 10 %}
+                              Low ({{ available_percentage|floatformat:2 }}% available)
+                            {% else %}
+                              Empty ({{ available_percentage|floatformat:2 }}% available)
+                            {% endif %}
+                          {% endwith %}
                         {% endwith %}
-                    </p>
+                      </p>
+                      
                 </div>
             </div>
         </div>

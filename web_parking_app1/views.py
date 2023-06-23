@@ -3,6 +3,7 @@ from .models import ParkingLot
 from .forms import ParkingLotForm
 from .models import ParkingLot, VehicleEntry
 from django.utils import timezone
+from django.contrib import messages
 #===================================Home page==========================================
 def home(request):
     return render(request, 'user_page/home.html')
@@ -16,7 +17,7 @@ def add_parking_lot(request):
         form = ParkingLotForm(request.POST)
         if form.is_valid():
             form.save()
-            return home(request) # Render a success page
+            return redirect('admin_dashboard') # Render a success page
     else:
         form = ParkingLotForm()
 
@@ -33,7 +34,7 @@ def update_parking_lot(request, pk):
         if form.is_valid():
             form.save()
             # Redirect to the home page or display a success message
-            return redirect('user_dashboard')
+            return redirect('admin_dashboard')
         else:
             # Display an error message or notification if the form is invalid
             error_message = 'Failed to update parking lot. Please check the form inputs.'
@@ -48,7 +49,7 @@ def delete_parking_lot(request, parking_lot_id):
     parking_lot = ParkingLot.objects.get(id=parking_lot_id)
     if request.method == 'POST':
         parking_lot.delete()
-        return redirect('home')  # Redirect to the home page after deletion
+        return redirect('admin_dashboard')  # Redirect to the home page after deletion
     return HttpResponse("Deletion is not completed")
 #====================parking lot in out============================
 
@@ -59,10 +60,14 @@ def parking_lot_detail(request, parking_lot_id):
     if request.method == 'POST':
         if 'in' in request.POST:
             vehicle_registration_Name = request.POST.get('vehicle_registration_Name')
-            entry = VehicleEntry.objects.create(parking_lot=parking_lot, vehicle_registration_Name=vehicle_registration_Name)
-            entry.save()
-            parking_lot.number_of_parking += 1  # Increase the count of parking by 1
-            parking_lot.save()
+            try:
+                entry = VehicleEntry.objects.create(parking_lot=parking_lot, vehicle_registration_Name=vehicle_registration_Name)
+                entry.save()
+                parking_lot.number_of_parking += 1  # Increase the count of parking by 1
+                parking_lot.save()
+                messages.success(request, 'Vehicle successfully parked.')
+            except Exception as e:
+                messages.error(request, f'Failed to park vehicle: {str(e)}')
         elif 'out' in request.POST:
             entry_id = request.POST.get('entry_id')
             entry = parking_lot.vehicleentry_set.filter(vehicle_registration_Name=entry_id, exit_time__isnull=True).first()
@@ -71,6 +76,7 @@ def parking_lot_detail(request, parking_lot_id):
                 entry.save()
                 parking_lot.number_of_parking -= 1  # Decrease the count of parking by 1
                 parking_lot.save()
+                messages.success(request, 'Vehicle successfully exited.')
             else:
                 messages.error(request, 'Entry ID not found.')
 
@@ -78,6 +84,7 @@ def parking_lot_detail(request, parking_lot_id):
         'parking_lot': parking_lot
     }
     return render(request, 'parking_lot_in_out.html', context)
+
 
 
 
