@@ -113,3 +113,36 @@ def map(request):
     return render(request, 'user_page/map.html')
 
 
+#==================================**************************Command***************
+
+import json
+from django.http import JsonResponse
+from django.views.decorators.csrf import csrf_exempt
+from .models import ParkingLot
+
+@csrf_exempt
+def update_parking_lot2(request):
+    if request.method == 'POST':
+        data = json.loads(request.body)
+        name = data.get('name')
+        action = data.get('action')
+
+        try:
+            parking_lot = ParkingLot.objects.get(name=name)
+        except ParkingLot.DoesNotExist:
+            return JsonResponse({'error': 'Parking lot not found'}, status=404)
+
+        if action == 'in':
+            parking_lot.number_of_parking += 1
+            parking_lot.save()
+        elif action == 'out':
+            if parking_lot.number_of_parking == 0:
+                return JsonResponse({'error': 'No available parking'}, status=400)
+            parking_lot.number_of_parking -= 1
+            parking_lot.save()
+        else:
+            return JsonResponse({'error': 'Invalid action'}, status=400)
+
+        return JsonResponse({'message': 'Parking lot updated successfully'})
+
+    return JsonResponse({'error': 'Invalid request method'}, status=400)
