@@ -112,6 +112,18 @@ def parking_lot_detail(request, parking_lot_id):
 def map(request):
     return render(request, 'user_page/map.html')
 
+def delete_vehicle_entry(request, entry_id):
+    entry = get_object_or_404(VehicleEntry, id=entry_id)
+    parking_lot = entry.parking_lot
+
+    if request.method == 'POST':
+        entry.delete()
+        messages.success(request, 'Vehicle entry deleted successfully.')
+    else:
+        messages.error(request, 'Invalid request.')
+
+    return redirect('parking_lot_detail', parking_lot_id=parking_lot.id)
+
 
 #==================================**************************Command***************
 
@@ -125,7 +137,7 @@ def update_parking_lot2(request):
     if request.method == 'POST':
         data = json.loads(request.body)
         name = data.get('name')
-        action = data.get('action')
+        action = data.get('INOUT')
 
         try:
             parking_lot = ParkingLot.objects.get(name=name)
