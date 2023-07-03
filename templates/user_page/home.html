@@ -54,8 +54,8 @@
 
       <nav id="navbar" class="navbar">
         <ul>
-          <li><a href="{% url 'admin_dashboard' %}">Admin Login</a></li>
-          <li><a class="nav-link scrollto active" href="#hero">Home</a></li>
+          <li><a href="{% url 'admin_dashboard' %}">Admin Dashboard</a></li>
+          <li><a class="nav-link scrollto active" href="{% url 'home' %}">Home</a></li>
 
 
           {% if user.is_authenticated %}

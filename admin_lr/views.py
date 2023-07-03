@@ -55,6 +55,8 @@ def login_user(request):
         form = AuthenticationForm()
     return render(request, 'login_Registrition/login_user.html', {'form': form})
 
+from django.contrib import messages
+
 def login_admin(request):
     if request.method == 'POST':
         form = AuthenticationForm(request, data=request.POST)
@@ -64,7 +66,9 @@ def login_admin(request):
                 login(request, user)
                 return redirect('admin_dashboard')
             else:
-                messages.error(request, 'User is not admin')
+                messages.error(request, 'Invalid login credentials for admin.')
+        else:
+            messages.error(request, 'Invalid login credentials.')
     else:
         form = AuthenticationForm()
     return render(request, 'login_Registrition/login_admin.html', {'form': form})

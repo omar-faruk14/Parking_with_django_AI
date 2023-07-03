@@ -45,6 +45,10 @@
                         </div>
                         <button class="btn btn-danger btn-sm" type="submit" name="out">Out</button>
                     </form>
+                    <form method="post" action="{% url 'delete_all_entries' parking_lot_id=parking_lot.id %}">
+                        {% csrf_token %}
+                        <button class="btn btn-danger btn-sm" style="margin-top: 10px;" type="submit" name="delete_all">ALL Delete</button>
+                    </form>
                 </div>
             </div>
 
@@ -61,7 +65,7 @@
                                 <th>Entry Time</th>
                                 <th>Exit Time</th>
                                 <th>Print</th>
-                                <th>Delete</th> <!-- Added a new column for the delete button -->
+                                <th>Delete</th>
                             </tr>
                         </thead>
                         <tbody>
@@ -88,6 +92,7 @@
         </div>
     </div>
 </section>
+
 
 <script>
     function printRow(vehicleName, entryTime, exitTime) {

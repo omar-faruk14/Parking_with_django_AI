@@ -68,69 +68,61 @@
       
 </style>
     <!-- ======= Breadcrumbs ======= -->
-    <section id="breadcrumbs" class="breadcrumbs">
-        <div class="container">
-      
-          <ol>
-            <li><a href="{% url 'home' %}">Home</a></li>
-            <li>Admin Login</li>
-          </ol>
-          <h2 class='text-center'>Admin Login</h2>
-      
-        </div>
-      </section><!-- End Breadcrumbs --> 
-         
-
+<section id="breadcrumbs" class="breadcrumbs">
+  <div class="container">
+      <ol>
+          <li><a href="{% url 'home' %}">Home</a></li>
+          <li>Admin Login</li>
+      </ol>
+      <h2 class='text-center'>Admin Login</h2>
+  </div>
+</section><!-- End Breadcrumbs --> 
+       
 <section>
-    <div class="login-box">
-        <div class="login-logo">
-            <a href="{% url 'home' %}"><b>Car</b>Parking</a>
-{% if messages %}
-<div class="alert alert-danger mt-3">
-{% for message in messages %}
-<p>{{ message }}</p>
-{% endfor %}
-</div>
-{% endif %}
-        </div>
-        <!-- /.login-logo -->
-        <div class="login-box-body">
-            <p class="login-box-msg">Log in to start your session</p>
-    
-            <form method="post">
-                {% csrf_token %}
-                <div class="form-group has-feedback">
-                    <input type="text" class="form-control" id="username" name="username" placeholder="Username">
-                    <span class="glyphicon glyphicon-user form-control-feedback"></span>
-                </div>
-                <div class="form-group has-feedback">
-                    <input type="password" class="form-control" id="password" name="password" placeholder="Password">
-                    <span class="glyphicon glyphicon-lock form-control-feedback"></span>
-                </div>
-                <div class="row">
-                    <div class="col-xs-8">
-                        <div class="checkbox icheck">
-                            <label>
-                                <input type="checkbox"> Remember Me
-                            </label>
-                        </div>
-                    </div>
-                    <!-- /.col -->
-                    <div class="col-xs-4">
-                        <button type="submit" class="btn btn-primary btn-block btn-flat">Sign In</button>
-                    </div>
-                    <!-- /.col -->
-                </div>
-                
-            </form>
-    
-            <!-- /.social-auth-links -->
-    
-        </div>
-        <!-- /.login-box-body -->
-    </div>
+  <div class="login-box">
+      <div class="login-logo">
+          <a href="{% url 'home' %}"><b>Car</b>Parking</a>
+      </div>
+      <!-- /.login-logo -->
+      <div class="login-box-body">
+          <p class="login-box-msg">Log in to start your session</p>
+
+          {% if messages %}
+          <div class="alert alert-danger mt-3">
+              {% for message in messages %}
+              <p>{{ message }}</p>
+              {% endfor %}
+          </div>
+          {% endif %}
+
+          <form method="post">
+              {% csrf_token %}
+              <div class="form-group has-feedback">
+                  <input type="text" class="form-control" id="username" name="username" placeholder="Username">
+                  <span class="glyphicon glyphicon-user form-control-feedback"></span>
+              </div>
+              <div class="form-group has-feedback">
+                  <input type="password" class="form-control" id="password" name="password" placeholder="Password">
+                  <span class="glyphicon glyphicon-lock form-control-feedback"></span>
+              </div>
+              <div class="row">
+                  <div class="col-xs-8">
+                      <div class="checkbox icheck">
+                          <label>
+                              <input type="checkbox"> Remember Me
+                          </label>
+                      </div>
+                  </div>
+                  <!-- /.col -->
+                  <div class="col-xs-4">
+                      <button type="submit" class="btn btn-primary btn-block btn-flat">Sign In</button>
+                  </div>
+                  <!-- /.col -->
+              </div>
+          </form>
+      </div>
+      <!-- /.login-box-body -->
+  </div>
 </section>
-
-
 
 {% endblock content %}

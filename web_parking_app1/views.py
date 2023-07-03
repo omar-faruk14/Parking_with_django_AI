@@ -85,33 +85,12 @@ def parking_lot_detail(request, parking_lot_id):
     }
     return render(request, 'parking_lot_in_out.html', context)
 
-
-
-
-
-
-# def parking_lot_detail(request, parking_lot_id):
-#     parking_lot = ParkingLot.objects.get(id=parking_lot_id)
-
-#     if request.method == 'POST':
-#         if 'in' in request.POST:
-#             parking_lot.number_of_parking += 1
-#             parking_lot.save()
-#         elif 'out' in request.POST:
-#             if parking_lot.number_of_parking > 0:
-#                 parking_lot.number_of_parking -= 1
-#                 parking_lot.save()
-
-#     context = {
-#         'parking_lot': parking_lot
-#     }
-#     return render(request, 'parking_lot_detail.html', context)
-
-
-
 def map(request):
     return render(request, 'user_page/map.html')
 
+
+
+#=================================Delete Parking Information============================
 def delete_vehicle_entry(request, entry_id):
     entry = get_object_or_404(VehicleEntry, id=entry_id)
     parking_lot = entry.parking_lot
@@ -119,6 +98,18 @@ def delete_vehicle_entry(request, entry_id):
     if request.method == 'POST':
         entry.delete()
         messages.success(request, 'Vehicle entry deleted successfully.')
+    else:
+        messages.error(request, 'Invalid request.')
+
+    return redirect('parking_lot_detail', parking_lot_id=parking_lot.id)
+
+def delete_all_entries(request, parking_lot_id):
+    parking_lot = get_object_or_404(ParkingLot, id=parking_lot_id)
+
+    if request.method == 'POST':
+        # Delete all entries for the specified parking lot
+        parking_lot.vehicleentry_set.all().delete()
+        messages.success(request, 'All entries deleted successfully.')
     else:
         messages.error(request, 'Invalid request.')
 
@@ -158,3 +149,4 @@ def update_parking_lot2(request):
         return JsonResponse({'message': 'Parking lot updated successfully'})
 
     return JsonResponse({'error': 'Invalid request method'}, status=400)
+
