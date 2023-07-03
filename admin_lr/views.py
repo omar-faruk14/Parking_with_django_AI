@@ -51,6 +51,8 @@ def login_user(request):
             user = form.get_user()
             login(request, user)
             return redirect('user_dashboard')
+        else:
+            messages.error(request, 'Invalid login credentials.')
     else:
         form = AuthenticationForm()
     return render(request, 'login_Registrition/login_user.html', {'form': form})
